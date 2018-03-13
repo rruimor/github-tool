@@ -18,7 +18,9 @@ export const getOrgs = ({ commit }, payload) => {
     }
   })
   .then(response => response.json())
-  .then(json => console.log(json))
+  // .then(json => console.log(json))
+  .then(json => commit(types.GET_ORGS, json.data))
+  .catch(e => { console.log(e) })
 }
 
 export const getReposForOrg = ({ commit }, payload) => {
@@ -34,6 +36,7 @@ export const getCount = ({commit}, payload) => {
   })
   .then(response => response.json())
   .then(json => commit(types.GET_COUNT, json))
+  .catch(e => { console.log(e) })
 }
 
 export const incCount = ({commit}, count_payload) => {
@@ -47,6 +50,7 @@ export const incCount = ({commit}, count_payload) => {
   })
   .then(response => response.json())
   .then(json => commit(types.INC_COUNT, json))
+  .catch(e => { console.log(e) })
 }
 
 export const signOut = ({commit}) => {

@@ -9,7 +9,8 @@ const state = {
   user: {},
   counts: {
     count: -1
-  }
+  },
+  orgs: []
 }
 
 export default new Vuex.Store({
