@@ -26,7 +26,9 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getUser')
+    let vm = this
+    vm.$store.dispatch('getUser')
+    .then(() => vm.$store.dispatch('getOrgs', { token: vm.$store.state.user.token }) )
   }
 }
 </script>

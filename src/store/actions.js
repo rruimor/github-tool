@@ -2,7 +2,7 @@ import * as types from './mutation-types'
 import axios from 'axios'
 
 export const getUser = ({commit}) => {
-  axios.get('/isauth')
+  return axios.get('/isauth')
   .then(function (response) {
     commit(types.GET_USER, response.data)
   })
