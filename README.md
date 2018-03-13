@@ -1,4 +1,9 @@
-# MEVN Boilerplate (with GitHub authentication)
+# GitHub Tools
+
+MEVN stack project example based on [antonderegt](https://github.com/antonderegt) [mevn-boilerplate](https://github.com/antonderegt/mevn-boilerplate)
+
+
+## About
 
 MEVN means it contains MongoDB, ExpressJS, VueJS and NodeJS
 it is based on vue cli (webpack-simple template).

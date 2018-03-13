@@ -1,6 +1,5 @@
 import * as types from './mutation-types'
 import axios from 'axios'
-var github = require('@octokit/rest')();
 
 export const getUser = ({commit}) => {
   axios.get('/isauth')
@@ -13,38 +12,25 @@ export const getUser = ({commit}) => {
 }
 
 export const getOrgs = ({ commit }, payload) => {
-  github.authenticate({
-    type: 'token',
-    token: payload.token
-  })
-
-  github.users
-  .getOrgs({
+  fetch(`api/github/orgs`, {
     headers: {
-        accept: 'application/vnd.github.mercy-preview+json'
+      'X-Access-Token': payload.token
     }
   })
-  .then(data => { console.log(data) });
+  .then(response => response.json())
+  .then(json => console.log(json))
 }
 
 export const getReposForOrg = ({ commit }, payload) => {
-  github.authenticate({
-    type: 'token',
-    token: payload.token
-  })
-
-  console.log(payload.org);
-
-  github.repos
-  .getForOrg({
-    org: payload.org
-  })
-  .then(data => { console.log(data) });
+  
 }
 
-export const getCount = ({commit}) => {
+export const getCount = ({commit}, payload) => {
   fetch(`/api/count`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'X-Access-Token': payload.token
+    }
   })
   .then(response => response.json())
   .then(json => commit(types.GET_COUNT, json))

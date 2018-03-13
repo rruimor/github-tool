@@ -6,6 +6,7 @@ const express = require('express'),
       session = require('express-session'),
       count = require('./server/routes/count'),
       auth = require('./server/routes/auth'),
+      github = require('./server/routes/github'),
       index = require('./server/routes/index')
 
 require('dotenv').load();
@@ -29,6 +30,7 @@ app.use(passport.session())
 
 app.use('/auth', auth)
 app.use('/api/count', count)
+app.use('/api/github', github)
 app.use('/', index)
 
 const port =  process.env.PORT || 3000;

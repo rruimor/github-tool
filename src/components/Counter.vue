@@ -4,7 +4,6 @@
     <h4>Count: {{this.$store.state.counts.count.count}}</h4>
     <button class="btn btn-primary" @click="incCount()">Increment Count</button>
     <button class="btn btn-primary" @click="getOrgs()">Get Orgs</button>
-    <button class="btn btn-primary" @click="getCompetaRepos()">Get Repos</button>
   </div> 
   <div v-else>
     <router-link to="/signin"><h3>Click here to sign in</h3></router-link>
@@ -19,19 +18,32 @@ export default {
     },
     getOrgs() {
       this.$store.dispatch('getOrgs', {
-        token: this.$store.state.user.oauthToken
+        token: this.$store.state.user.token
       })
     },
-    getCompetaRepos() {
-      this.$store.dispatch('getReposForOrg', { 
-        token: this.$store.state.user.oauthToken,
-        org: 'Competa-IT'
-      })
-    }
+    // getCompetaRepos() {
+    //   this.$store.dispatch('getReposForOrg', { 
+    //     token: this.$store.state.user.oauthToken,
+    //     org: 'Competa-IT'
+    //   })
+    // },
+    // getMe() {
+    //   fetch('/me', {
+    //     headers: { 
+    //       "X-Access-Token": this.$store.state.user.token 
+    //     }
+    //   })
+    //   .then(response => response.json())
+    //   .then(json => console.log(json))
+    // }
   },
   mounted() {
-    this.$store.dispatch('getCount')
-    this.$store.dispatch('getUser')
+    let vm = this
+    vm.$store.dispatch('getUser')
+    .then(() => vm.$store.dispatch('getCount', { token: vm.$store.state.user.token }) )
+    // this.$store.dispatch('getCount', {
+    //   token: this.$store.state.user.oauthToken
+    // })
   }
 }
 </script>

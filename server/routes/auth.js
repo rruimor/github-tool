@@ -8,7 +8,7 @@ router.get('/github',
 router.get('/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/counter')
+    res.redirect('/')
   })
 
 module.exports = router

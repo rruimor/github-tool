@@ -5,15 +5,20 @@ import App from './components/App.vue'
 import store from './store'
 
 Vue.use(VueRouter)
+
 import Home from './components/Home.vue'
 import Counter from './components/Counter.vue'
 import Signin from './components/Signin.vue'
+import NotFound from './components/NotFound.vue'
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', component: Home },
     { path: '/counter', component: Counter },
-    { path: '/signin', component: Signin }
+    { path: '/signin', component: Signin },
+    { path: '/404', component: NotFound },
+    { path: '*', redirect: '/404' },
   ]
 })
 

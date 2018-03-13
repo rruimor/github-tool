@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/counter">Counter</router-link> |
-    <a v-if="this.$store.state.user.auth" href="/logout" @click="signOut">Log Out</a>
-    <router-link v-else to="/signin">Sign In</router-link>
     <h1>{{msg}}</h1>
+    <nav v-if="this.$store.state.user.auth">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/counter">Counter</router-link> |
+      <a href="/logout" @click="signOut">Log Out</a>
+      <!-- <router-link v-else to="/signin">Sign In</router-link> -->
+    </nav>
     <hr />
     <router-view />
   </div>
