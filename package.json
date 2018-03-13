@@ -25,6 +25,7 @@
     "passport-github": "^1.1.0",
     "vue": "^2.2.1",
     "vue-router": "^2.4.0",
+    "vue-simple-spinner": "^1.2.8",
     "vuex": "^2.3.0"
   },
   "devDependencies": {

@@ -4,9 +4,10 @@
     <div v-if="this.$store.state.user.auth">
       <h2>Welcome {{ displayName }}</h2>
       <!-- Render OrgsList Component -->
-      <OrganizationsList
+      <!-- <OrganizationsList
         :organizations="organizations"
-      />
+      /> -->
+      <OrganizationsList />
     </div>
 
     <div v-else>
@@ -26,9 +27,9 @@ export default {
     displayName: function() {
       return this.$store.state.user.displayName
     },
-    organizations: function() {
-      return this.$store.state.orgs
-    }
+    // organizations: function() {
+    //   return this.$store.state.orgs
+    // }
   },
 } 
 </script>

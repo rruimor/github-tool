@@ -28,7 +28,7 @@ export default {
   mounted() {
     let vm = this
     vm.$store.dispatch('getUser')
-    .then(() => vm.$store.dispatch('getOrgs', { token: vm.$store.state.user.token }) )
+    // .then(() => vm.$store.dispatch('getOrgs', { token: vm.$store.state.user.token }) )
   }
 }
 </script>

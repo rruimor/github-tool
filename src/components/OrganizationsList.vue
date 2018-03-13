@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Spinner v-if="loading" />
+
     <ul v-if="organizations && organizations.length">
       <OrganizationListItem
         v-for="organization of organizations"
@@ -12,17 +14,33 @@
 
 <script>
   import OrganizationListItem from './OrganizationListItem.vue'
+  import Spinner from 'vue-simple-spinner'
 
   export default {
     name: 'OrganizationsList',
-    props: {
-      organizations: {
-        type: Array,
-        required: true
+    data() {
+      return {
+        loading: true,
+        organizations: []
       }
     },
+    // props: {
+    //   organizations: {
+    //     type: Array,
+    //     required: true
+    //   }
+    // },
     components: {
-      OrganizationListItem
+      OrganizationListItem, Spinner
+    },
+    mounted() {
+      let vm = this
+
+      vm.$store.dispatch('getOrgs', { token: vm.$store.state.user.token })
+      .then( () => { 
+        vm.loading = false
+        vm.organizations = vm.$store.state.orgs
+      })
     }
   }
 </script>

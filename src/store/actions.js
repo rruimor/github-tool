@@ -12,7 +12,7 @@ export const getUser = ({commit}) => {
 }
 
 export const getOrgs = ({ commit }, payload) => {
-  fetch(`api/github/orgs`, {
+  return fetch(`api/github/orgs`, {
     headers: {
       'X-Access-Token': payload.token
     }
