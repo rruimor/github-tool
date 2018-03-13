@@ -15,7 +15,7 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'MEVN Boilerplate'
+      msg: 'GitHub Tools'
     }
   },
   methods: {
