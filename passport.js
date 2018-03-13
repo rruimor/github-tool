@@ -28,7 +28,8 @@ module.exports = function (passport) {
       } else {
         var newUser = new User()
 
-        console.log(`OAUTH TOKEEENENENENEE ${accessToken}`)
+        // TODO Store encoded OauthToken
+        // var hashedOauthToken = bcrypt.hashSync(req.body.password, 8)
 
         newUser.id = profile.id
         newUser.username = profile.username

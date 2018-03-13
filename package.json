@@ -6,16 +6,19 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "serve": "cross-env NODE_ENV=production webpack -w",
+    "serve": "cross-env NODE_ENV=development webpack -w",
     "start": "node server"
   },
   "dependencies": {
+    "@octokit/rest": "^15.2.1",
     "axios": "^0.16.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
     "connect-mongostore": "^0.1.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "jsonwebtoken": "^8.2.0",
     "mongoose": "^4.9.5",
     "nodemon": "^1.17.1",
     "passport": "^0.3.2",
