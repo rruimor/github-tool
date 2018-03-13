@@ -21,7 +21,6 @@
     data() {
       return {
         loading: true,
-        organizations: []
       }
     },
     // props: {
@@ -33,13 +32,17 @@
     components: {
       OrganizationListItem, Spinner
     },
+    computed: {
+      organizations: function() {
+        return this.$store.state.orgs
+      },
+    },
     mounted() {
       let vm = this
 
       vm.$store.dispatch('getOrgs', { token: vm.$store.state.user.token })
       .then( () => { 
         vm.loading = false
-        vm.organizations = vm.$store.state.orgs
       })
     }
   }
