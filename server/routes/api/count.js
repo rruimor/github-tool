@@ -1,5 +1,5 @@
 const express = require('express'),
-      Count = require('../models/count')
+      Count = require('../../models/count')
 
 module.exports = (() => {
     'use strict';

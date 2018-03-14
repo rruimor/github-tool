@@ -6,9 +6,9 @@ import store from './store'
 
 Vue.use(VueRouter)
 
-import Home from './components/Home.vue'
-import Counter from './components/Counter.vue'
-import Signin from './components/Signin.vue'
+import Home from './components/home/Home.vue'
+import Counter from './components/counter/Counter.vue'
+import Signin from './components/auth/Signin.vue'
 import NotFound from './components/NotFound.vue'
 
 const router = new VueRouter({

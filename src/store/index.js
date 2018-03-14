@@ -10,7 +10,10 @@ const state = {
   counts: {
     count: -1
   },
-  orgs: []
+  organizations: {
+    items: [],
+    loading: false,
+  },
 }
 
 export default new Vuex.Store({

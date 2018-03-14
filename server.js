@@ -4,10 +4,10 @@ const express = require('express'),
       mongoose = require('mongoose'),
       passport = require('passport'),
       session = require('express-session'),
-      count = require('./server/routes/count'),
       auth = require('./server/routes/auth'),
-      github = require('./server/routes/github'),
-      index = require('./server/routes/index')
+      index = require('./server/routes/index'),
+      count = require('./server/routes/api/count')
+      github = require('./server/routes/api/github')
 
 require('dotenv').load();
 require('./passport')(passport)

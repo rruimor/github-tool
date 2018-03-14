@@ -1,6 +1,6 @@
 const express = require('express'),
-      User = require('../models/user')
-      verifyToken = require('../helpers/verifyToken');;
+      User = require('../../models/user')
+      verifyToken = require('../../helpers/verifyToken');;
 
 module.exports = (() => {
     'use strict';

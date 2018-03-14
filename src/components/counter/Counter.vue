@@ -21,29 +21,11 @@ export default {
         token: this.$store.state.user.token
       })
     },
-    // getCompetaRepos() {
-    //   this.$store.dispatch('getReposForOrg', { 
-    //     token: this.$store.state.user.oauthToken,
-    //     org: 'Competa-IT'
-    //   })
-    // },
-    // getMe() {
-    //   fetch('/me', {
-    //     headers: { 
-    //       "X-Access-Token": this.$store.state.user.token 
-    //     }
-    //   })
-    //   .then(response => response.json())
-    //   .then(json => console.log(json))
-    // }
   },
   mounted() {
     let vm = this
     vm.$store.dispatch('getUser')
     .then(() => vm.$store.dispatch('getCount', { token: vm.$store.state.user.token }) )
-    // this.$store.dispatch('getCount', {
-    //   token: this.$store.state.user.oauthToken
-    // })
   }
 }
 </script>

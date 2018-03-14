@@ -11,23 +11,22 @@ export const getUser = ({commit}) => {
   });
 }
 
-export const getOrgs = ({ commit }, payload) => {
+export const getOrgs = ({commit, state}) => {  
   return fetch(`api/github/orgs`, {
     headers: {
-      'X-Access-Token': payload.token
+      'X-Access-Token': state.user.token
     }
   })
   .then(response => response.json())
-  // .then(json => console.log(json))
   .then(json => commit(types.GET_ORGS, json.data))
   .catch(e => { console.log(e) })
 }
 
-export const getReposForOrg = ({ commit }, payload) => {
+export const getReposForOrg = ({ commit }) => {
   
 }
 
-export const getCount = ({commit}, payload) => {
+export const getCount = ({commit, state}) => {
   fetch(`/api/count`, {
     method: 'GET',
     headers: {

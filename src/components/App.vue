@@ -5,7 +5,6 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/counter">Counter</router-link> |
       <a href="/logout" @click="signOut">Log Out</a>
-      <!-- <router-link v-else to="/signin">Sign In</router-link> -->
     </nav>
     <hr />
     <router-view />
@@ -26,9 +25,7 @@ export default {
     }
   },
   mounted() {
-    let vm = this
-    vm.$store.dispatch('getUser')
-    // .then(() => vm.$store.dispatch('getOrgs', { token: vm.$store.state.user.token }) )
+    this.$store.dispatch('getUser')
   }
 }
 </script>

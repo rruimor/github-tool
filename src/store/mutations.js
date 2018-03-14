@@ -8,7 +8,13 @@ export const mutations = {
     state.counts = count_payload
   },
   [types.GET_ORGS] (state, orgs_payload) {
-    state.orgs = orgs_payload
+    state.organizations.items = orgs_payload
+  },
+  [types.SET_LOADING_ORGS] (state) {
+    state.organizations.loading = true
+  },
+  [types.UNSET_LOADING_ORGS] (state) {
+    state.organizations.loading = false
   },
   [types.INC_COUNT] (state, count_payload) {
     state.counts.count = count_payload

@@ -1,4 +1,6 @@
 export const GET_USER = 'GET_USER'
+export const SET_LOADING_ORGS = 'SET_LOADING_ORGS'
+export const UNSET_LOADING_ORGS = 'UNSET_LOADING_ORGS'
 export const GET_ORGS = 'GET_ORGS'
 export const GET_COUNT = 'GET_COUNT'
 export const INC_COUNT = 'INC_COUNT'
