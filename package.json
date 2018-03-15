@@ -1,8 +1,8 @@
 {
   "name": "mevn-github-auth",
-  "description": "A MEVN Biolerplate project (Mongo, Express, Vue, Node)",
-  "version": "0.0.2",
-  "author": "Anton de Regt <ditisanton@gmail.com>",
+  "description": "A MEVN (Mongo, Express, Vue, Node) project with the Github private API",
+  "version": "0.0.1",
+  "author": "Rafael Ruiz Moreno",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
