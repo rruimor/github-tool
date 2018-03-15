@@ -15,6 +15,9 @@ const state = {
     loaded: false,
     current: null
   },
+  repos: {
+    
+  }
 }
 
 const getters = {

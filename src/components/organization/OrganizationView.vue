@@ -2,11 +2,11 @@
   <div v-if="this.$store.getters.isUserLogged">
     <Promised :promise="getOrganization">
       <Spinner slot="pending" />
-      <div slot="then" slot-scope="item">
+      <section slot="then" slot-scope="item">
         <template v-if="organization">
           <h1>{{ organization.login }}</h1>
           <img class="avatar" :src="organization.avatar_url" >
-          <p>{{ organization.public_repos }}</p>
+          <p v-if="organization.location">{{ organization.location }}</p>
 
           <OrganizationReposList :organizationSlug="organizationSlug" />
 
@@ -14,7 +14,8 @@
         <template v-else>
           <p>{{ organizationSlug }} not found!</p>
         </template>
-      </div>
+        <LinkBack />
+      </section>
       <p slot="catch" slot-scope="error">Error: {{ error.message }}</p>
     </Promised>
   </div>
@@ -27,12 +28,14 @@
   import Spinner from 'vue-simple-spinner'
   import Promised from 'vue-promised'
   import OrganizationReposList from './OrganizationReposList.vue'
+  import LinkBack from './../LinkBack.vue'
   
   export default {
     name: 'OrganizationView',
     components: {
       Spinner,
       Promised,
+      LinkBack,
       OrganizationReposList
     },
     computed: {
@@ -50,5 +53,4 @@
       }
     }
   }
-
 </script>

@@ -50,9 +50,5 @@
 </script>
 
 <style scoped>
-  .repos__list {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 5%;
-  }
+  
 </style>

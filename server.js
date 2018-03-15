@@ -6,7 +6,6 @@ const express = require('express'),
       session = require('express-session'),
       auth = require('./server/routes/auth'),
       index = require('./server/routes/index'),
-      count = require('./server/routes/api/count')
       github = require('./server/routes/api/github')
 
 require('dotenv').load();
@@ -29,7 +28,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/auth', auth)
-app.use('/api/count', count)
 app.use('/api/github', github)
 app.use('/', index)
 

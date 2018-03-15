@@ -3,7 +3,6 @@
     <h1>{{msg}}</h1>
     <nav v-if="this.$store.state.user.auth">
       <router-link to="/">Home</router-link> |
-      <router-link to="/counter">Counter</router-link> |
       <a href="/logout" @click="signOut">Log Out</a>
     </nav>
     <hr />
@@ -26,9 +25,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getUser')
-    // if (!this.$store.getters.isUserLogged) {
-    //   this.$router.push('/')
-    // }
   }
 }
 </script>
@@ -58,5 +54,31 @@ a {
 
 .avatar {
   max-width: 100px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px 5%;
+    justify-content: center;
+  }
+
+.card {
+  flex: 1 0 220px;
+  box-sizing: border-box;
+  margin: 1.5rem 1em;
+  outline: 1px solid grey;
+}
+
+.card__header {
+  padding: 10px;
+  border-bottom: 1px solid;
+  margin-bottom: 10px;
+}
+
+.card__title {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 0;
 }
 </style>

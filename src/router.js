@@ -5,7 +5,7 @@ import store from './store/index.js'
 
 import Home from './components/home/Home.vue'
 import OrganizationView from './components/organization/OrganizationView.vue'
-import Counter from './components/counter/Counter.vue'
+import RepoView from './components/repo/RepoView.vue'
 import Signin from './components/auth/Signin.vue'
 import NotFound from './components/NotFound.vue'
 
@@ -28,7 +28,11 @@ const Router = new VueRouter({
       //   }
       // }
     },
-    { path: '/counter', component: Counter },
+    { 
+      path: '/repos/:ownerSlug/:repoSlug',
+      component: RepoView,
+      props: true
+    },
     { path: '/signin', component: Signin },
     { path: '/404', component: NotFound },
     { path: '*', redirect: '/404' },

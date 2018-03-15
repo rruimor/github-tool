@@ -94,34 +94,48 @@ export const getOrgRepos = ( {commit, state}, orgSlug, page = 1 ) => {
     .catch(e => { console.log(e) })
 }
 
-export const getReposForOrg = ({ commit }) => {
-  
-}
-
-export const getCount = ({commit, state}) => {
-  fetch(`/api/count`, {
-    method: 'GET',
+export const getRepo = ({ commit, state }, repoParams, page = 1) => {
+  return axios.get(`/api/github/repos/${repoParams.ownerSlug}/${repoParams.repoSlug}`, {
     headers: {
       'X-Access-Token': state.user.token
+    },
+    params: {
+      page: page
     }
   })
-  .then(response => response.json())
-  .then(json => commit(types.GET_COUNT, json))
-  .catch(e => { console.log(e) })
+    .then(response => {
+      let responseData = response.data
+      if (responseData.code === 404) {
+        return
+      }
+      else {
+        commit(types.GET_REPO, responseData.data)
+      }
+
+    })
+    .catch(e => { console.log(e) })
 }
 
-export const incCount = ({commit}, count_payload) => {
-  fetch(`/api/count`, {
-    method: 'POST',
+export const getRepoCollaborators = ({ commit, state }, repoParams, page = 1) => {
+  return axios.get(`/api/github/repos/${repoParams.ownerSlug}/${repoParams.repoSlug}/collaborators`, {
     headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
+      'X-Access-Token': state.user.token
     },
-    body: JSON.stringify({ count: ++count_payload })
+    params: {
+      page: page
+    }
   })
-  .then(response => response.json())
-  .then(json => commit(types.INC_COUNT, json))
-  .catch(e => { console.log(e) })
+    .then(response => {
+      let responseData = response.data
+      if (responseData.code === 404) {
+        return
+      }
+      else {
+        commit(types.GET_REPO_COLLABORATORS, responseData.data)
+      }
+
+    })
+    .catch(e => { console.log(e) })
 }
 
 export const signOut = ({commit}) => {

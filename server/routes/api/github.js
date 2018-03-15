@@ -33,12 +33,7 @@ module.exports = (() => {
       })
 
       github.orgs
-        .get({
-          org: orgSlug,
-          // headers: {
-          //     accept: 'application/vnd.github.mercy-preview+json'
-          // }
-        })
+        .get({ org: orgSlug })
         .then(data => { res.send(data) })
         .catch(e => { res.send(e) })
     })
@@ -73,6 +68,48 @@ module.exports = (() => {
       github.repos
         .getForOrg({
           org: orgSlug,
+          page: page
+        })
+        .then(data => { res.send(data) })
+        .catch(e => { res.send(e) })
+    })
+
+    router.get('/repos/:ownerSlug/:repoSlug', verifyToken, getGithubUserToken, (req, res) => {
+      let ownerSlug = req.params.ownerSlug
+      let repoSlug = req.params.repoSlug
+      let page = req.query.page || 1
+
+      
+
+      github.authenticate({
+        type: 'token',
+        token: res.locals.oauthToken
+      })
+
+      github.repos
+        .get({
+          owner: ownerSlug,
+          repo: repoSlug,
+          page: page
+        })
+        .then(data => { res.send(data) })
+        .catch(e => { res.send(e) })
+    })
+
+    router.get('/repos/:ownerSlug/:repoSlug/collaborators', verifyToken, getGithubUserToken, (req, res) => {
+      let ownerSlug = req.params.ownerSlug
+      let repoSlug = req.params.repoSlug
+      let page = req.query.page || 1
+
+      github.authenticate({
+        type: 'token',
+        token: res.locals.oauthToken
+      })
+
+      github.repos
+        .getCollaborators({
+          owner: ownerSlug,
+          repo: repoSlug,
           page: page
         })
         .then(data => { res.send(data) })
