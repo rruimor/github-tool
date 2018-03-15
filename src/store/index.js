@@ -12,12 +12,20 @@ const state = {
   },
   organizations: {
     items: [],
-    loading: false,
+    loaded: false,
+    current: null
   },
+}
+
+const getters = {
+  isUserLogged: state => {
+    return state.user.token != undefined
+  }
 }
 
 export default new Vuex.Store({
   state,
+  getters,
   mutations,
   actions
 })

@@ -22,6 +22,78 @@ export const getOrgs = ({commit, state}) => {
   .catch(e => { console.log(e) })
 }
 
+export const getOrg = ({commit, state}, orgSlug) => { 
+  return axios.get(`/api/github/orgs/${orgSlug}`, {
+    headers: {
+      'X-Access-Token': state.user.token
+    },
+  })
+  .then(response => {
+    let responseData = response.data
+
+    console.log("response code: ", responseData.code)
+
+    if (responseData.code === 404) {
+      return
+    }
+    else {
+      commit(types.GET_ORG, responseData.data)
+    }
+
+  })
+  .catch(e => { console.log(e) })
+}
+
+export const getOrgMembers = ( {commit, state}, orgSlug, page = 1 ) => {
+  return axios.get(`/api/github/orgs/${orgSlug}/members`, {
+    headers: {
+      'X-Access-Token': state.user.token
+    },
+    params: {
+      page: page
+    }
+  })
+    .then(response => {
+      let responseData = response.data
+
+      console.log("response code: ", responseData.code)
+
+      if (responseData.code === 404) {
+        return
+      }
+      else {
+        commit(types.GET_ORG_MEMBERS, responseData.data)
+      }
+
+    })
+    .catch(e => { console.log(e) })
+}
+
+export const getOrgRepos = ( {commit, state}, orgSlug, page = 1 ) => {
+  return axios.get(`/api/github/orgs/${orgSlug}/repos`, {
+    headers: {
+      'X-Access-Token': state.user.token
+    },
+    params: {
+      page: page
+    }
+  })
+    .then(response => {
+      let responseData = response.data
+
+      console.log("response code: ", responseData.code)
+
+      if (responseData.code === 404) {
+        return
+      }
+      else {
+        commit(types.GET_ORG_REPOS, responseData.data)
+      }
+
+    })
+    .catch(e => { console.log(e) })
+}
+
 export const getReposForOrg = ({ commit }) => {
   
 }
@@ -30,7 +102,7 @@ export const getCount = ({commit, state}) => {
   fetch(`/api/count`, {
     method: 'GET',
     headers: {
-      'X-Access-Token': payload.token
+      'X-Access-Token': state.user.token
     }
   })
   .then(response => response.json())

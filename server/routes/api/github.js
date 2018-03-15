@@ -23,6 +23,62 @@ module.exports = (() => {
         .then(data => { res.send(data) });
     })
 
+    router.get('/orgs/:orgSlug', verifyToken, getGithubUserToken, (req, res) => {
+      let orgSlug = req.params.orgSlug
+      console.log("Org Slug: ", orgSlug)
+
+      github.authenticate({
+        type: 'token',
+        token: res.locals.oauthToken
+      })
+
+      github.orgs
+        .get({
+          org: orgSlug,
+          // headers: {
+          //     accept: 'application/vnd.github.mercy-preview+json'
+          // }
+        })
+        .then(data => { res.send(data) })
+        .catch(e => { res.send(e) })
+    })
+
+    router.get('/orgs/:orgSlug/members', verifyToken, getGithubUserToken, (req, res) => {
+      let orgSlug = req.params.orgSlug
+      let page = req.query.page || 1
+
+      github.authenticate({
+        type: 'token',
+        token: res.locals.oauthToken
+      })
+
+      github.orgs
+        .getMembers({
+          org: orgSlug,
+          page: page
+        })
+        .then(data => { res.send(data) })
+        .catch(e => { res.send(e) })
+    })
+
+    router.get('/orgs/:orgSlug/repos', verifyToken, getGithubUserToken, (req, res) => {
+      let orgSlug = req.params.orgSlug
+      let page = req.query.page || 1
+
+      github.authenticate({
+        type: 'token',
+        token: res.locals.oauthToken
+      })
+
+      github.repos
+        .getForOrg({
+          org: orgSlug,
+          page: page
+        })
+        .then(data => { res.send(data) })
+        .catch(e => { res.send(e) })
+    })
+
     function getGithubUserToken(req, res, next) {
       // Find User ID
       User.findById(res.locals.userId, function (err, user) {

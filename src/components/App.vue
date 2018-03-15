@@ -26,6 +26,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getUser')
+    // if (!this.$store.getters.isUserLogged) {
+    //   this.$router.push('/')
+    // }
   }
 }
 </script>
@@ -51,5 +54,9 @@ ul {
 
 a {
   color: #42b983;
+}
+
+.avatar {
+  max-width: 100px;
 }
 </style>

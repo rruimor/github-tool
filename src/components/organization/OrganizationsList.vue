@@ -2,13 +2,16 @@
   <div>
     <Promised :promise="getOrganizations">
       <Spinner slot="pending" />
-      <ul slot="then" slot-scope="items">
-        <OrganizationListItem
-          v-for="item of organizations"
-          :key="item.id"
-          :organization="item"
-        />
-      </ul>
+      <div slot="then" slot-scope="items">
+        <p>Select an organization from the list:</p>
+        <ul>
+          <OrganizationListItem
+            v-for="item of organizations"
+            :key="item.id"
+            :organization="item"
+          />
+        </ul>
+      </div>
       <p slot="catch" slot-scope="error">Error: {{ error.message }}</p>
     </Promised>
   </div>
@@ -33,13 +36,13 @@
     },
     computed: {
       getOrganizations: function() {
-        return this.$store.dispatch('getOrgs', { token: this.$store.state.user.token })
+        return this.$store.dispatch('getOrgs')
       },
       organizations: function() {
         return this.$store.state.organizations.items
       },
       organizationsLoaded: function() {
-
+        
       }
     }
   }

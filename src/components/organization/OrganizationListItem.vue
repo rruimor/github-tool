@@ -1,6 +1,8 @@
 <template>
   <li>
-    {{ organization.login }}
+    <router-link
+      :to="{ path: `/organizations/${organization.login}` }"
+    >{{ organization.login }}</router-link>
   </li>
 </template>
 
