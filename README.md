@@ -2,6 +2,8 @@
 
 MEVN stack project example based on [antonderegt](https://github.com/antonderegt) [mevn-boilerplate](https://github.com/antonderegt/mevn-boilerplate)
 
+Live [demo](https://shielded-caverns-50464.herokuapp.com/)
+
 
 ## About
 
