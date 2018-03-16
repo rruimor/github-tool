@@ -1,6 +1,5 @@
 const express = require('express'),
-      User = require('../../models/user')
-      verifyToken = require('../../helpers/verifyToken');;
+      verifyToken = require('../../helpers/verifyToken');
 
 module.exports = (() => {
     'use strict';
@@ -11,7 +10,6 @@ module.exports = (() => {
     router.get('/orgs', verifyToken, initGithubClient, (req, res) => {
       // console.log("GITHUB INSTANCE:", github)
       // console.log("**********TOKEN: ", res.locals.oauthToken)
-
       github.users
         .getOrgs({
           headers: {
@@ -83,7 +81,7 @@ module.exports = (() => {
         .catch(e => { res.send(e) })
     })
 
-    router.get('/repos/:ownerSlug/:repoSlug/commits', verifyToken, initGithubClient, (req, res) => {
+    router.get('/repos/:ownerSlug/:repoSlug/lastcommit', verifyToken, initGithubClient, (req, res) => {
       let ownerSlug = req.params.ownerSlug
       let repoSlug = req.params.repoSlug
       let page = req.query.page || 1
@@ -96,11 +94,9 @@ module.exports = (() => {
 
       if (author !== undefined) params.author = author
 
-      github
-        .repos
-        .getCommits(params)
-        .then(data => { res.send(data) })
-        .catch(e => { res.send(e) })
+      getLastCommit(github, params, (error, commit) => {
+        res.send({data: commit})
+      })
     })
 
     function initGithubClient(req, res, next) {
@@ -109,6 +105,40 @@ module.exports = (() => {
         token: res.locals.oauthToken
       })
       return next()
+    }
+
+    function getLastCommit(githubClient, params, method) {
+      _withAllBranches(githubClient, params, (error, repoBranches) => {
+        if (error) return method(error)
+
+        Promise.all(repoBranches.map(branch => {
+          params.sha = branch.name
+
+          return githubClient.repos.getCommits(params).then(response => {
+            let commit = response.data[0]
+            commit.branch = params.sha
+            return commit
+          })
+        }))
+          .then(combined => {
+            const max = combined.reduce((prev, current) => {
+              return (prev.commit.author.date > current.commit.author.date) ? prev : current
+            }) 
+            method(null, max)
+          })
+          .catch(error => method(error))
+      })      
+    }
+
+    function _withAllBranches(githubClient, params, method) {
+      githubClient
+        .repos
+        .getBranches(params)
+        .then(res => method(null, res.data))
+        .catch(e => {
+          console.log(e)
+          method(e) 
+        })
     }
 
     return router;
