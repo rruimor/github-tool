@@ -8,12 +8,7 @@ module.exports = (() => {
     const router = express.Router();
     var github = require('@octokit/rest')();
 
-    router.get('/orgs', verifyToken, getGithubUserToken, (req, res) => {
-      github.authenticate({
-        type: 'token',
-        token: res.locals.oauthToken
-      })
-
+    router.get('/orgs', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {
       github.users
         .getOrgs({
           headers: {
@@ -23,14 +18,8 @@ module.exports = (() => {
         .then(data => { res.send(data) });
     })
 
-    router.get('/orgs/:orgSlug', verifyToken, getGithubUserToken, (req, res) => {
+    router.get('/orgs/:orgSlug', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {
       let orgSlug = req.params.orgSlug
-      console.log("Org Slug: ", orgSlug)
-
-      github.authenticate({
-        type: 'token',
-        token: res.locals.oauthToken
-      })
 
       github.orgs
         .get({ org: orgSlug })
@@ -38,14 +27,9 @@ module.exports = (() => {
         .catch(e => { res.send(e) })
     })
 
-    router.get('/orgs/:orgSlug/members', verifyToken, getGithubUserToken, (req, res) => {
+    router.get('/orgs/:orgSlug/members', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {
       let orgSlug = req.params.orgSlug
       let page = req.query.page || 1
-
-      github.authenticate({
-        type: 'token',
-        token: res.locals.oauthToken
-      })
 
       github.orgs
         .getMembers({
@@ -56,14 +40,8 @@ module.exports = (() => {
         .catch(e => { res.send(e) })
     })
 
-    router.get('/orgs/:orgSlug/repos', verifyToken, getGithubUserToken, (req, res) => {
-      let orgSlug = req.params.orgSlug
+    router.get('/orgs/:orgSlug/repos', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {let orgSlug = req.params.orgSlug
       let page = req.query.page || 1
-
-      github.authenticate({
-        type: 'token',
-        token: res.locals.oauthToken
-      })
 
       github.repos
         .getForOrg({
@@ -74,17 +52,9 @@ module.exports = (() => {
         .catch(e => { res.send(e) })
     })
 
-    router.get('/repos/:ownerSlug/:repoSlug', verifyToken, getGithubUserToken, (req, res) => {
-      let ownerSlug = req.params.ownerSlug
+    router.get('/repos/:ownerSlug/:repoSlug', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {let ownerSlug = req.params.ownerSlug
       let repoSlug = req.params.repoSlug
       let page = req.query.page || 1
-
-      
-
-      github.authenticate({
-        type: 'token',
-        token: res.locals.oauthToken
-      })
 
       github.repos
         .get({
@@ -96,15 +66,9 @@ module.exports = (() => {
         .catch(e => { res.send(e) })
     })
 
-    router.get('/repos/:ownerSlug/:repoSlug/collaborators', verifyToken, getGithubUserToken, (req, res) => {
-      let ownerSlug = req.params.ownerSlug
+    router.get('/repos/:ownerSlug/:repoSlug/collaborators', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {let ownerSlug = req.params.ownerSlug
       let repoSlug = req.params.repoSlug
       let page = req.query.page || 1
-
-      github.authenticate({
-        type: 'token',
-        token: res.locals.oauthToken
-      })
 
       github.repos
         .getCollaborators({
@@ -112,6 +76,30 @@ module.exports = (() => {
           repo: repoSlug,
           page: page
         })
+        .then(data => { res.send(data) })
+        .catch(e => { res.send(e) })
+    })
+
+    router.get('/repos/:ownerSlug/:repoSlug/commits', verifyToken, getGithubUserToken, initGithubClient, (req, res) => {
+      let ownerSlug = req.params.ownerSlug
+      let repoSlug = req.params.repoSlug
+      let page = req.query.page || 1
+      let author = req.query.author
+
+      let params = {
+        owner: ownerSlug,
+        repo: repoSlug
+      }
+
+      if (author !== undefined) params.author = author
+
+      // console.log(aggregateCommitsFromBranches(params))
+
+      // res.send({})
+
+      github
+        .repos
+        .getCommits(params)
         .then(data => { res.send(data) })
         .catch(e => { res.send(e) })
     })
@@ -125,6 +113,43 @@ module.exports = (() => {
         res.locals.oauthToken = user.oauthToken
         return next()
       });
+    }
+
+    function initGithubClient(req, res, next) {
+      github.authenticate({
+        type: 'token',
+        token: res.locals.oauthToken
+      })
+      return next()
+    }
+
+    function aggregateCommitsFromBranches(params) {
+      let commits = []
+      github
+        .repos
+        .getBranches(params)
+        .then(data => {
+          // All branches
+          let branches = data.data
+          console.log("Branches: ", branches)
+
+          return branches})
+        .then(branches => {
+          for (let branch of branches) {
+            params.sha = branch
+            params.per_page = 1
+
+            github
+              .repos
+              .getCommits(param)
+              .then(data => {
+                console.log("yolo")
+                console.log(data);
+              })
+              .catch(e => e)
+          }
+        })
+        .catch(e => e)
     }
 
     return router;
