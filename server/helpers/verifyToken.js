@@ -11,7 +11,8 @@ function verifyToken(req, res, next) {
   jwt.verify(token, process.env.SECRET, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
-    res.locals.userId = decoded.id
+    // res.locals.userId = decoded.id
+    res.locals.oauthToken = decoded.oauthToken
     next();
   });
 }

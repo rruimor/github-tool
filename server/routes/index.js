@@ -3,20 +3,6 @@ const express = require('express'),
       path = require('path'),
       jwt = require('jsonwebtoken')
 
-router.get('/isauth', (req, res, next) => {
-  // res.send(req.user)
-
-  if (!req.user) {
-    return res.status(200).send( { auth: false })
-  }
-
-  var token = jwt.sign({ id: req.user._id }, process.env.SECRET, {
-    expiresIn: 86400 // expires in 24 hours
-  });
-
-  res.status(200).send({ auth: true, token: token, displayName: req.user.displayName });
-})
-
 router.get('/me', (req, res, next) => {
   let token = req.headers['x-access-token']
 

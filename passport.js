@@ -17,33 +17,6 @@ module.exports = function (passport) {
     scope: ['user:email', 'repo', 'read:org']
   },
   function(accessToken, refreshToken, profile, done) {
-
-    User.findOne({ 'id': profile.id }, function (err, user) {
-      if (err) {
-        return done(err)
-      }
-
-      if (user) {
-        return done(null, user)
-      } else {
-        var newUser = new User()
-
-        // TODO Store encoded OauthToken
-        // var hashedOauthToken = bcrypt.hashSync(req.body.password, 8)
-
-        newUser.id = profile.id
-        newUser.username = profile.username
-        newUser.displayName = profile.displayName
-        newUser.oauthToken = accessToken
-
-        newUser.save(function (err) {
-          if (err) {
-            throw err
-          }
-
-          return done(null, profile)
-        })
-      }
-    })
+    return done(null, {accessToken, profile})
   }))
 }

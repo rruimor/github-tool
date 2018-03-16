@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>{{msg}}</h1>
-    <nav v-if="this.$store.state.user.auth">
+    <nav v-if="this.$store.getters.isUserLogged">
       <router-link to="/">Home</router-link> |
       <a href="/logout" @click="signOut">Log Out</a>
     </nav>
@@ -25,6 +25,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getUser')
+  },
+  created() {
+    this.$store.dispatch('tryAutoLogin')
   }
 }
 </script>

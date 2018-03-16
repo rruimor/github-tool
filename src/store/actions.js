@@ -2,13 +2,34 @@ import * as types from './mutation-types'
 import axios from 'axios'
 
 export const getUser = ({commit}) => {
-  return axios.get('/isauth')
+  return axios.get('/auth')
   .then(function (response) {
+    if (response.data.token) {
+      const now = new Date()
+      const expirationDate = new Date(now.getTime() + response.data.expiresIn * 1000)
+
+      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('expiresIn', expirationDate)
+      localStorage.setItem('displayName', response.data.displayName)
+    }
+
     commit(types.GET_USER, response.data)
   })
   .catch(function (error) {
     console.log(error);
   });
+}
+
+export const tryAutoLogin = ({commit}) => {
+  const token = localStorage.getItem('token')
+  if (!token) return
+
+  const expirationDate = localStorage.getItem('expirationDate')
+  const now = new Date()
+  if (now >= expirationDate) return
+
+  const displayName = localStorage.getItem('displayName')
+  commit(types.GET_USER, { token, displayName })
 }
 
 export const getOrgs = ({commit, state}) => {  
@@ -140,4 +161,5 @@ export const getRepoCollaborators = ({ commit, state }, repoParams, page = 1) =>
 
 export const signOut = ({commit}) => {
   commit(types.SIGN_OUT)
+  localStorage.clear()
 }

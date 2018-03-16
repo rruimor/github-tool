@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="this.$store.state.user.auth">
+    <div v-if="this.$store.getters.isUserLogged">
       <h2>Welcome {{ displayName }}</h2>
       <OrganizationsList />
     </div>
