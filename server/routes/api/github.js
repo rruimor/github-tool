@@ -9,8 +9,8 @@ module.exports = (() => {
     var github = require('@octokit/rest')();
 
     router.get('/orgs', verifyToken, initGithubClient, (req, res) => {
-      console.log("GITHUB INSTANCE:", github)
-      console.log("**********TOKEN: ", res.locals.oauthToken)
+      // console.log("GITHUB INSTANCE:", github)
+      // console.log("**********TOKEN: ", res.locals.oauthToken)
 
       github.users
         .getOrgs({
