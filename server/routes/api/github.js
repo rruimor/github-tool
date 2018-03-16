@@ -10,6 +10,7 @@ module.exports = (() => {
 
     router.get('/orgs', verifyToken, initGithubClient, (req, res) => {
       console.log("GITHUB INSTANCE:", github)
+      console.log("**********TOKEN: ", res.locals.oauthToken)
 
       github.users
         .getOrgs({
