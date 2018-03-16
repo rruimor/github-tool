@@ -95,7 +95,7 @@ module.exports = (() => {
       if (author !== undefined) params.author = author
 
       getLastCommit(github, params, (error, commit) => {
-        res.send({data: commit})
+        res.send(commit)
       })
     })
 
@@ -114,9 +114,13 @@ module.exports = (() => {
         Promise.all(repoBranches.map(branch => {
           params.sha = branch.name
 
+          // console.log('branch name: ', branch.name)
+          // console.log('params: ', params)
+
           return githubClient.repos.getCommits(params).then(response => {
             let commit = response.data[0]
-            commit.branch = params.sha
+            commit.branch = branch
+            // console.log("commit: \n", commit)
             return commit
           })
         }))

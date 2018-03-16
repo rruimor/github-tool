@@ -1,25 +1,27 @@
 <template>
   <Promised :promise="getCollaborators">
-      <Spinner slot="pending" />
+    <Spinner slot="pending" />
 
-      <section
-        slot="then"
-        slot-scope="items"
-        class="collaborators__list cards"
-      >
-        <template v-if="collaborators && collaborators.length">
-          <CollaboratorCard
-            v-for="collaborator in collaborators"
-            :collaborator="collaborator"
-            :key="collaborator.id"
-          />
-        </template>
+    <section
+      slot="then"
+      slot-scope="items"
+      class="collaborators__list cards"
+    >
+      <template v-if="collaborators && collaborators.length">
+        <CollaboratorCard
+          v-for="collaborator in collaborators"
+          :collaborator="collaborator"
+          :ownerSlug="ownerSlug"
+          :repoSlug="repoSlug"
+          :key="collaborator.id"
+        />
+      </template>
 
-        <p v-else>You don't have permissions to see the collaborators for this repo.</p>
-      </section>
+      <p v-else>You don't have permissions to see the collaborators for this repo.</p>
+    </section>
 
-      <p slot="catch" slot-scope="error">Error: {{ error.message }}</p>
-    </Promised>
+    <p slot="catch" slot-scope="error">Error: {{ error.message }}</p>
+  </Promised>
 </template>
 
 <script>

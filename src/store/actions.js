@@ -51,8 +51,7 @@ export const getOrg = ({commit, state}, orgSlug) => {
   })
   .then(response => {
     let responseData = response.data
-
-    console.log("response code: ", responseData.code)
+    // console.log("response code: ", responseData.code)
 
     if (responseData.code === 404) {
       return
@@ -76,8 +75,7 @@ export const getOrgMembers = ( {commit, state}, orgSlug, page = 1 ) => {
   })
     .then(response => {
       let responseData = response.data
-
-      console.log("response code: ", responseData.code)
+      // console.log("response code: ", responseData.code)
 
       if (responseData.code === 404) {
         return
@@ -101,8 +99,7 @@ export const getOrgRepos = ( {commit, state}, orgSlug, page = 1 ) => {
   })
     .then(response => {
       let responseData = response.data
-
-      console.log("response code: ", responseData.code)
+      // console.log("response code: ", responseData.code)
 
       if (responseData.code === 404) {
         return
@@ -153,6 +150,30 @@ export const getRepoCollaborators = ({ commit, state }, repoParams, page = 1) =>
       }
       else {
         commit(types.GET_REPO_COLLABORATORS, responseData.data)
+      }
+
+    })
+    .catch(e => { console.log(e) })
+}
+
+export const getLastCommit = ({state}, params) => {
+  const apiUrl = `/api/github/repos/${params.ownerSlug}/${params.repoSlug}/lastcommit`
+
+  return axios.get(apiUrl, {
+    headers: {
+      'X-Access-Token': state.user.token
+    },
+    params: {
+      author: params.author
+    }
+  })
+  .then(response => {
+      let responseData = response.data
+      if (responseData.code === 404) {
+        return
+      }
+      else {
+        return response.data
       }
 
     })
