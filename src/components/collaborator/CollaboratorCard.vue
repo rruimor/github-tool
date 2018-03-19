@@ -1,9 +1,9 @@
 <template>
   <article class="card">
     <header class="card__header">
+      <img class="avatar" :src="collaborator.avatar_url">
       <p class="card__title">{{ collaborator.login }}</p>
     </header>
-    <img class="avatar" :src="collaborator.avatar_url">
     <Promised :promise="getLastCommit">
       <div slot="pending">
         <Spinner/>
@@ -18,15 +18,19 @@
         <template v-if="Object.keys(lastCommit).length !== 0">
           <header>
             <p class="card__title">Last Commit</p>            
+            <p>{{ lastCommit.commit.author.date | asTimeAgo }}</p>
           </header>
           <section class="card__section">
-            <p class="quote">'{{ lastCommit.commit.message }}'</p>
-            <p>Branch: {{ lastCommit.branch.name }}</p>
-            <p>{{ lastCommit.commit.author.date }}</p>
-            <a :href="lastCommit.html_url" target="_blank">Open in GitHub</a>
+            <article>
+              <blockquote class="quote">'{{ lastCommit.commit.message }}'</blockquote>
+            </article>
+            <article>
+              <p>Branch: {{ lastCommit.branch.name }}</p>
+              <a :href="lastCommit.html_url" target="_blank">Open in GitHub</a>
+            </article>
           </section>
         </template>
-        <p v-else>No Info found</p>
+        <p v-else>No commits found</p>
       </section>
 
       <p slot="catch" slot-scope="error">Error: {{ error.message }}</p>

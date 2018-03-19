@@ -56,7 +56,8 @@ a {
 }
 
 .avatar {
-  max-width: 100px;
+  max-width: 75px;
+  border-radius: 100%;
 }
 
 .cards {
@@ -82,6 +83,6 @@ a {
 .card__title {
   font-weight: bold;
   font-size: 1.2em;
-  margin: 0;
+  margin: 10px;
 }
 </style>
