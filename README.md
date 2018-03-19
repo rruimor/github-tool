@@ -6,7 +6,7 @@ Live [demo](https://shielded-caverns-50464.herokuapp.com/)
 
 It uses NodeJS + Express for the backend and VueJS for the front-end. 
 
-PassportJS is also used to authenticate a GitHub user and request an OauthToken the access the private API.
+PassportJS is also used to authenticate a GitHub user and request an OauthToken to access its private API.
 
 ## How to start
 
