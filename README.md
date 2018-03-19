@@ -1,21 +1,19 @@
 # GitHub Tools
 
-MEVN stack project example based on [antonderegt](https://github.com/antonderegt) [mevn-boilerplate](https://github.com/antonderegt/mevn-boilerplate) to check the stats on the repos of the GitHub organizations that you're part of.
+This is an example project that proxies the GitHub API to check the latests commits of the collaborators of the repos from the organizations the user belongs to.
 
 Live [demo](https://shielded-caverns-50464.herokuapp.com/)
 
+It uses NodeJS + Express for the backend and VueJS for the front-end. 
 
-## About
-
-It uses PassportJS to authenticate a user with GitHub and request and OauthToken.
+PassportJS is also used to authenticate a GitHub user and request an OauthToken the access the private API.
 
 ## How to start
 
-Add a .env file with your PORT, MONGO_URI, GITHUB_ID, GITHUB_SECRET and APP_URL like this:
+Add a .env file with your PORT, GITHUB_ID, GITHUB_SECRET and APP_URL like this:
 
 ``` bash
 PORT=3000
-MONGO_URI=mongodb://127.0.0.1:27017/voting-app
 GITHUB_ID=233245n234566kjh243f
 GITHUB_SECRET=k2hj432kjgjkh2g34kj2g4jkh23g4jk2342jhg34
 APP_URL=http://127.0.0.1:3000/
@@ -37,3 +35,8 @@ nodemon server.js
 # build for production with minification
 npm run build
 ```
+
+
+## Disclaimer
+
+This project was based on [MEVN Boilerplate With Authentication](https://github.com/antonderegt/mevn-github-auth) from [Anton de Regt](https://github.com/antonderegt).
