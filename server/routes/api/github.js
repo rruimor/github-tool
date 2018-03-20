@@ -1,4 +1,5 @@
 const express = require('express'),
+      _ = require('lodash')
       verifyToken = require('../../helpers/verifyToken');
 
 module.exports = (() => {
@@ -95,6 +96,7 @@ module.exports = (() => {
       if (author !== undefined) params.author = author
 
       getLastCommit(github, params, (error, commit) => {
+        if (error) return res.status(400).send(error)
         res.send(commit)
       })
     })
@@ -114,18 +116,19 @@ module.exports = (() => {
         Promise.all(repoBranches.map(branch => {
           params.sha = branch.name
 
-          // console.log('branch name: ', branch.name)
-          // console.log('params: ', params)
-
           return githubClient.repos.getCommits(params).then(response => {
             let commit = response.data[0]
-            commit.branch = branch
-            // console.log("commit: \n", commit)
+
+            if (commit !== undefined) {
+              commit.branch = branch
+            }
+
             return commit
           })
         }))
           .then(combined => {
             const max = combined.reduce((prev, current) => {
+              if (current === undefined) return prev 
               return (prev.commit.author.date > current.commit.author.date) ? prev : current
             }) 
             method(null, max)
